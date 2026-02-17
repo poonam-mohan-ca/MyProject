@@ -1,0 +1,19 @@
+name: Deploy Todo App
+
+# This tells GitHub to run the script every time you "push" to the main branch
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy to Render
+        # This sends a "ping" to Render to start the build
+        run: |
+          curl -f ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
