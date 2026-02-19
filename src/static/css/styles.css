@@ -1,39 +1,258 @@
-body {
-    background-color: #f4f4f4;
-    margin-top: 50px;
-    font-family: 'Lato';
+/* ===================================================
+   Pooja's To-Do List — Premium Yosemite Theme
+   =================================================== */
+
+/* --- Reset & Base --- */
+*, *::before, *::after {
+    box-sizing: border-box;
 }
 
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    color: #fff;
+
+    /* Yosemite background via Unsplash CDN */
+    background-image: url('https://images.unsplash.com/photo-1562310503-a918c4c61e38?auto=format&fit=crop&w=1920&q=85');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+
+/* Dark overlay so text is always readable */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(
+        160deg,
+        rgba(10, 25, 47, 0.45) 0%,
+        rgba(0, 0, 0, 0.30) 60%,
+        rgba(20, 50, 20, 0.35) 100%
+    );
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* ===================================================
+   Hero Header
+   =================================================== */
+#app-header {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 52px 20px 32px;
+}
+
+.header-content {
+    display: inline-block;
+}
+
+.app-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(2.4rem, 6vw, 4.2rem);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: #fff;
+    margin: 0 0 10px;
+    text-shadow:
+        0 2px 12px rgba(0, 0, 0, 0.6),
+        0 0 40px rgba(255, 220, 100, 0.20);
+    animation: titleFadeIn 1s ease both;
+}
+
+.app-tagline {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    color: rgba(255, 255, 255, 0.82);
+    margin: 0;
+    text-shadow: 0 1px 6px rgba(0,0,0,0.5);
+    animation: titleFadeIn 1.3s ease both;
+}
+
+/* ===================================================
+   Todo Container
+   =================================================== */
+#root {
+    position: relative;
+    z-index: 1;
+    padding-bottom: 60px;
+}
+
+/* Glass card wrapping the whole list */
+.todo-card {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-radius: 20px;
+    padding: 28px 24px;
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.30),
+        inset 0 1px 0 rgba(255,255,255,0.25);
+    animation: cardSlideUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* ===================================================
+   Add Item Form
+   =================================================== */
+.todo-card .form-control {
+    border-radius: 50px 0 0 50px !important;
+    border: 1.5px solid rgba(255,255,255,0.40) !important;
+    background: rgba(255, 255, 255, 0.18) !important;
+    backdrop-filter: blur(6px);
+    color: #fff !important;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    padding: 10px 18px;
+    transition: border-color 0.25s, background 0.25s;
+}
+
+.todo-card .form-control::placeholder {
+    color: rgba(255,255,255,0.55);
+}
+
+.todo-card .form-control:focus {
+    outline: none;
+    box-shadow: none !important;
+    border-color: rgba(255,255,255,0.75) !important;
+    background: rgba(255,255,255,0.26) !important;
+}
+
+.todo-card .input-group-append .btn-success {
+    border-radius: 0 50px 50px 0 !important;
+    padding: 10px 22px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 0.92rem;
+    background: linear-gradient(135deg, #4ade80, #16a34a) !important;
+    border: none !important;
+    box-shadow: 0 4px 14px rgba(22, 163, 74, 0.45);
+    transition: transform 0.18s, box-shadow 0.18s;
+}
+
+.todo-card .input-group-append .btn-success:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(22, 163, 74, 0.60);
+}
+
+.todo-card .input-group-append .btn-success:disabled {
+    opacity: 0.50;
+}
+
+/* ===================================================
+   Todo Items
+   =================================================== */
 .item {
-    background-color: white;
-    padding: 15px;
-    margin-bottom: 15px;
-    border: transparent;
-    border-radius: 5px;
-    box-shadow: 0 0 1em #ccc;
-    transition: all .2s ease-in-out;
+    background: rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    border-radius: 12px;
+    padding: 12px 15px;
+    margin-bottom: 10px;
+    transition: transform 0.20s ease, box-shadow 0.20s ease, background 0.20s;
+    animation: itemFadeIn 0.4s ease both;
+    color: #fff;
 }
 
 .item:hover {
-    box-shadow: 0 0 1em #aaa;
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.26);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.22);
 }
 
 .item.completed {
     text-decoration: line-through;
+    opacity: 0.55;
 }
 
+/* Toggle checkbox button */
 .toggles {
-    color: black;
+    color: rgba(255, 255, 255, 0.85) !important;
+    transition: color 0.18s, transform 0.18s;
+    padding: 0 !important;
 }
 
+.toggles:hover {
+    color: #4ade80 !important;
+    transform: scale(1.15);
+}
+
+/* Item name */
 .name {
     padding-top: 3px;
+    font-size: 0.97rem;
+    font-weight: 400;
+    letter-spacing: 0.01em;
 }
 
+/* Remove button */
 .remove {
     padding-left: 0;
 }
 
+.remove .btn-link {
+    transition: transform 0.18s;
+}
+
+.remove .btn-link:hover {
+    transform: scale(1.20);
+}
+
+/* ===================================================
+   Empty state
+   =================================================== */
+.text-center.text-muted-custom, p.text-center {
+    color: rgba(255,255,255,0.70) !important;
+    font-style: italic;
+    font-size: 0.95rem;
+    margin-top: 6px;
+}
+
+/* ===================================================
+   Misc
+   =================================================== */
 button:focus {
-    border: 1px solid #333;
+    outline: 2px solid rgba(255,255,255,0.50);
+    outline-offset: 2px;
+    border: none;
+}
+
+/* ===================================================
+   Animations
+   =================================================== */
+@keyframes titleFadeIn {
+    from { opacity: 0; transform: translateY(-16px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes cardSlideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes itemFadeIn {
+    from { opacity: 0; transform: translateX(-10px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ===================================================
+   Responsive
+   =================================================== */
+@media (max-width: 576px) {
+    .todo-card {
+        padding: 20px 14px;
+        border-radius: 14px;
+    }
+
+    .app-title {
+        font-size: 2rem;
+    }
 }

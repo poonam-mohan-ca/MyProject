@@ -4,7 +4,9 @@ function App() {
         <Container>
             <Row>
                 <Col md={{ offset: 3, span: 6 }}>
-                    <TodoListCard />
+                    <div className="todo-card">
+                        <TodoListCard />
+                    </div>
                 </Col>
             </Row>
         </Container>
@@ -53,7 +55,7 @@ function TodoListCard() {
         <React.Fragment>
             <AddItemForm onNewItem={onNewItem} />
             {items.length === 0 && (
-                <p className="text-center">Empty list yet. Start adding right away!!!!!</p>
+                <p className="text-center">Empty list. Start adding right away!!!!!</p>
             )}
             {items.map(item => (
                 <ItemDisplay
@@ -152,9 +154,8 @@ function ItemDisplay({ item, onItemUpdate, onItemRemoval }) {
                         }
                     >
                         <i
-                            className={`far ${
-                                item.completed ? 'fa-check-square' : 'fa-square'
-                            }`}
+                            className={`far ${item.completed ? 'fa-check-square' : 'fa-square'
+                                }`}
                         />
                     </Button>
                 </Col>
